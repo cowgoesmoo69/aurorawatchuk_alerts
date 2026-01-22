@@ -1,7 +1,7 @@
-# Acknowledgements
+﻿# Acknowledgements
 [<img src="assets/aw-logo_w_300.jpg">](https://aurorawatch.lancs.ac.uk)
 
-This project uses data that is made available by the [Aurorawatch UK](https://aurorawatch.lancs.ac.uk) project based at [Lancaster University](https://www.lancs.ac.uk). Neither [the author](https://github.com/cowgoesmoo69), nor this project, are in any way associated with or endorsed by Aurorawatch UK.
+This project uses data that is made available by the [Aurorawatch UK](https://aurorawatch.lancs.ac.uk) project based at [Lancaster University](https://www.lancs.ac.uk). Neither [the author](https://github.com/cowgoesmoo69), nor this project, are in any way associated with, or endorsed by, Aurorawatch UK.
 
 The data from Aurorawatch UK is made available under CC BY-NC-SA 3.0 Attribution-NonCommercial-ShareAlike 3.0 Unported. Accordingly, this project is licensed under CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike 4.0 International. See [LICENSE](./LICENSE) for further details.
 
@@ -111,3 +111,23 @@ These instructions are written primarily with Debian in mind, but they will prob
 1. Start the service:
 
     `sudo systemctl start aurorawatch-uk-alerts.service`.
+1. Check the service is running:
+
+    `sudo systemctl status aurorawatch-uk-alerts.service`.
+
+    Something similar to the below should be seen:
+
+    ```
+    🟢 aurorawatch-uk-alerts.service - Aurorawatch UK Alerts
+         Loaded: loaded (/etc/systemd/system/aurorawatch-uk-alerts.service; enabled; preset: enabled)
+         Active: active (running) since Thu 2026-01-22 17:13:38 UTC; 5s ago
+       Main PID: 14015 (python3)
+          Tasks: 1 (limit: 9440)
+         Memory: 21.1M
+            CPU: 138ms
+         CGroup: /system.slice/aurorawatch-uk-alerts.service
+                 └─14015 /usr/bin/python3 /opt/aurorawatch-uk-alerts/app/aurorawatch-uk-alerts.py
+
+    Jan 22 17:13:38 hostname systemd[1]: Starting aurorawatch-uk-alerts.service - Aurorawatch UK Alerts...
+    Jan 22 17:13:38 hostname systemd[1]: Started aurorawatch-uk-alerts.service - Aurorawatch UK Alerts.
+    ```
