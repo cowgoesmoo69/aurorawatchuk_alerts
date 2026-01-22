@@ -8,7 +8,7 @@ The data from Aurorawatch UK is made available under CC BY-NC-SA 3.0 Attribution
 # aurorawatch-uk-alerts
 Retrieves status information from Aurorawatch UK and sends an alert using Pushover if all sites provided in the primary API output are reporting red.
 
-Aurorawatch UK already have a range of smartphone apps and other methods of [receiving alerts]((https://aurorawatch.lancs.ac.uk/alerts/)) that are probably sufficient for most people's needs, and offer greater flexibility than this project. The author wanted only notifications of all sites reporting red, specifically via Pushover.
+Aurorawatch UK already have a range of smartphone apps and other methods of [receiving alerts](https://aurorawatch.lancs.ac.uk/alerts/)) that are probably sufficient for most people's needs, and offer greater flexibility than this project. The author wanted only notifications of all sites reporting red, specifically via Pushover.
 
 This project is intended to be run as a background systemd service in a Linux environment. The pre-requisites and installation instructions are provided on that basis.
 
