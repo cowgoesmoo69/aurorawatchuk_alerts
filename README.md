@@ -5,7 +5,7 @@ This project uses data that is made available by the [Aurorawatch UK](https://au
 
 The data from Aurorawatch UK is made available under CC BY-NC-SA 3.0 Attribution-NonCommercial-ShareAlike 3.0 Unported. Accordingly, this project is licensed under CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike 4.0 International. See [LICENSE](./LICENSE) for further details.
 
-# aurorawatch-uk
+# aurorawatch-uk-alerts
 Retrieves status information from Aurorawatch UK and sends an alert using Pushover if all sites provided in the primary API output are reporting red.
 
 Aurorawatch UK already have a range of smartphone apps and other methods of [receiving alerts]((https://aurorawatch.lancs.ac.uk/alerts/)) that are probably sufficient for most people's needs, and offer greater flexibility than this project. The author wanted only notifications of all sites reporting red, specifically via Pushover.
