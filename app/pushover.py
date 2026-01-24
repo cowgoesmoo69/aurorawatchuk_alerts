@@ -21,7 +21,7 @@ class Validate:
     # optional
     # Haven't included attachment_base64 or attachment_type.
     # attachment_base64 isn't required as we can easily pass an attachment tuple in the call to requests.
-    # attachment_type isn't included as it doesn't appear to be necessary for attaching an image to a message, and is not included in the minimal image attachment example in the API docs.
+    # attachment_type isn't included as it appears to only be necessary when using attachment_base64.
     attachment: tuple[str, BinaryIO, str] | None = None
     device: str | None = None
     html: int | None = None
