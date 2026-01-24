@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-#
-# This script expects PUSHOVER_USER_KEY and PUSHOVER_APP_TOKEN to be present as
-# environment variables. See installation instructions for further information.
-#
+
 import argparse
 from pushover import send_alert
 from datetime import date, datetime, timedelta
@@ -12,14 +9,9 @@ import random
 import requests
 import time
 
-
-DEBUG = False  # Set to True to enable noisier output in terminal.
-
 SCRIPT_VERSION="2.0.0"
-PUSHOVER_USER_KEY = os.environ.get("PUSHOVER_USER_KEY")  # Pushover user/group key.
-PUSHOVER_APP_TOKEN = os.environ.get("PUSHOVER_APP_TOKEN")  # Pushover app token.
-AWUK_URL = "https://aurorawatch-api.lancs.ac.uk/0.2.5/status/all-site-status.xml"
 
+AWUK_URL = "https://aurorawatch-api.lancs.ac.uk/0.2.5/status/all-site-status.xml"
 
 def argparser():
     parser = argparse.ArgumentParser(
@@ -39,6 +31,10 @@ def argparser():
 
 
 def pre_checks():
+    """
+    Processes supplied command-line arguments and checks that required environment variables exist.
+    Format validation of the app token and the user key is performed within the pushover.py module.
+    """
     args = argparser()
     global DEBUG
     DEBUG = args.debug
@@ -56,9 +52,13 @@ def pre_checks():
         raise TypeError("Threshold must be an integer.")
     if DEBUG:
         print("Threshold passed validation.")
+    # Check for necessary environment variables.
     if DEBUG:
         print("DEBUG: Checking for environment variables.")
-    # Check environment variables exist.
+    global PUSHOVER_APP_TOKEN
+    PUSHOVER_APP_TOKEN = os.environ.get("PUSHOVER_APP_TOKEN")
+    global PUSHOVER_USER_KEY
+    PUSHOVER_USER_KEY = os.environ.get("PUSHOVER_USER_KEY")
     if not PUSHOVER_USER_KEY or not PUSHOVER_APP_TOKEN:
         raise RuntimeError("Missing environment variable(s).")
     if DEBUG:
