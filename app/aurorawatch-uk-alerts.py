@@ -9,6 +9,10 @@ from datetime import date, datetime, timedelta
 from pushover import send_alert
 
 SCRIPT_VERSION="2.0.0"
+# TODO
+# Integrate alert interval and check interval into ArgumentParser
+ALERT_INTERVAL = 3600 # 1 hour
+CHECK_INTERVAL = 300  # 5 minutes
 
 def argparser():
     parser = argparse.ArgumentParser(
@@ -83,20 +87,41 @@ def pre_checks():
 
 
 def main():
+    STATUS_TEXT = ["GREEN", "YELLOW", "AMBER", "RED"]
+    last_alert_time = 0
     while True:
         status = get_status()
+        now = time.time()
+        if DEBUG:
+            print(f"Current status: {STATUS_TEXT[status]}.")
         if status >= THRESHOLD:
-            STATUS_TEXT = ["GREEN", "YELLOW", "AMBER", "RED"]
-            args = {
-                "token": PUSHOVER_APP_TOKEN,
-                "user": PUSHOVER_USER_KEY,
-                "message": f"AuroraWatch UK Status: {STATUS_TEXT[status]}.",
-                "ttl": TTL
-                }
-            if status == 3:
-                args["priority"] = 1
-            send_alert(**args)
-        time.sleep(540) # AWUK request no shorter than 3-minute interval.
+            should_alert = (
+                last_alert_time = 0 or
+                (now - last_alert_time >= ALERT_INTERVAL)
+                )
+            if should_alert:
+                if DEBUG:
+                    print("Sending alert.")
+                args = {
+                    "token": PUSHOVER_APP_TOKEN,
+                    "user": PUSHOVER_USER_KEY,
+                    "message": f"AuroraWatch UK Status: {STATUS_TEXT[status]}.",
+                    "ttl": TTL
+                    }
+                # Send RED alerts as high priority.
+                if status == 3:
+                    args["priority"] = 1
+                send_alert(**args)
+                last_alert_time = now
+            else:
+                if DEBUG:
+                    print("Status above threshold, but alert recently sent.")
+        else:
+            # Reset if status drops below threshold.
+            last_alert_time = 0
+        if DEBUG:
+            print("Sleeping...")
+        time.sleep(CHECK_INTERVAL) # AWUK request no shorter than 3-minute interval.
 
 
 if __name__ == "__main__":
