@@ -45,9 +45,9 @@ def pre_checks():
     if DEBUG:
         print("Validating supplied threshold value.")
     global THRESHOLD
-    THRESHOLD = args.threshold
+    THRESHOLD = int(args.threshold)
     if isinstance(THRESHOLD, int):
-        if THRESHOLD >=1 and THRESHOLD <=3:
+        if THRESHOLD >= 1 and THRESHOLD <= 3:
             pass
         else:
             raise ValueError("Threshold must be between 1 and 3.")
@@ -101,7 +101,7 @@ def go_to_sleep():
 
 def main():
     while True:
-        status = get_status
+        status = get_status()
         if status >= THRESHOLD:
             STATUS_TEXT = ["GREEN", "YELLOW", "AMBER", "RED"]
             args = {
