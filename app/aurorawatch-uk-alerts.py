@@ -45,7 +45,7 @@ def argparser():
     parser.add_argument(
         "-t",
         "--ttl",
-        help="Sets a custom ttl in seconds. Default is four hours.",
+        help="Sets a custom alert ttl in seconds. Default is four hours.",
         default=14400,
     )
     parser.add_argument("-v", "--version", action="version", version=SCRIPT_VERSION)
