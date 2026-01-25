@@ -8,7 +8,8 @@ from aurorawatchuk import get_status
 from datetime import date, datetime, timedelta
 from pushover import send_alert
 
-SCRIPT_VERSION="aurorawatch-uk-alerts 2.0.0"
+SCRIPT_VERSION = "aurorawatch-uk-alerts 2.0.0"
+
 
 def argparser():
     parser = argparse.ArgumentParser(
@@ -22,13 +23,13 @@ def argparser():
         "--alert-interval",
         help="Sets a custom alert interval in seconds. Default is one hour.",
         default=3600,
-        )
+    )
     parser.add_argument(
         "-c",
         "--check-interval",
         help="Sets a custom check interval in seconds. Default is five minutes.",
         default=300,
-        )
+    )
     parser.add_argument(
         "-d",
         "--debug",
@@ -40,13 +41,13 @@ def argparser():
         "--reduced-sensitivity",
         help="Only send alerts when status of all sites is above threshold.",
         action="store_true",
-        )
+    )
     parser.add_argument(
         "-t",
         "--ttl",
         help="Sets a custom ttl in seconds. Default is four hours.",
         default=14400,
-        )
+    )
     parser.add_argument("-v", "--version", action="version", version=SCRIPT_VERSION)
     return parser.parse_args()
 
@@ -136,10 +137,9 @@ def main():
             if DEBUG:
                 print(f"Current status: {STATUS_TEXT[status]}.")
             if status >= THRESHOLD:
-                should_alert = (
-                    last_alert_time == 0 or
-                    (now - last_alert_time >= ALERT_INTERVAL)
-                    )
+                should_alert = last_alert_time == 0 or (
+                    now - last_alert_time >= ALERT_INTERVAL
+                )
                 if should_alert:
                     if DEBUG:
                         print("Sending alert.")
@@ -147,8 +147,8 @@ def main():
                         "token": PUSHOVER_APP_TOKEN,
                         "user": PUSHOVER_USER_KEY,
                         "message": f"AuroraWatch UK Status: {STATUS_TEXT[status]}.",
-                        "ttl": TTL
-                        }
+                        "ttl": TTL,
+                    }
                     # Send RED alerts as high priority.
                     if status == 3:
                         args["priority"] = 1
@@ -162,7 +162,9 @@ def main():
                 last_alert_time = 0
             if DEBUG:
                 print("Sleeping...")
-            time.sleep(CHECK_INTERVAL) # AWUK request no shorter than 3-minute interval.
+            time.sleep(
+                CHECK_INTERVAL
+            )  # AWUK request no shorter than 3-minute interval.
 
 
 if __name__ == "__main__":
