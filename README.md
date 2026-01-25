@@ -8,7 +8,9 @@ This project is intended to be run as a background systemd service in a Linux en
 
 This project uses data that is made available by the [AuroraWatch UK](https://aurorawatch.lancs.ac.uk) project based at [Lancaster University](https://www.lancs.ac.uk). Neither [the author](https://github.com/cowgoesmoo69), nor this project, are in any way associated with, or endorsed by, AuroraWatch UK.
 
-The data from AuroraWatch UK is made available under CC BY-NC-SA 3.0 Attribution-NonCommercial-ShareAlike 3.0 Unported. Accordingly, this project is licensed under CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike 4.0 International. See [LICENSE](./LICENSE) for further details.
+The data from AuroraWatch UK is made available under CC BY-NC-SA 3.0 Attribution-NonCommercial-ShareAlike 3.0 Unported.
+
+Accordingly, this project is licensed under CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike 4.0 International. See [LICENSE](./LICENSE) for further details.
 
 AuroraWatch UK have a range of smartphone apps and other methods of [receiving alerts](https://aurorawatch.lancs.ac.uk/alerts/) that may be sufficient for your needs.
 
