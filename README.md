@@ -80,7 +80,7 @@ These instructions are written primarily with Debian in mind, but they will prob
     `sudo mkdir /etc/opt/aurorawatch-uk-alerts`.
 1. [Log in](https://pushover.net/login) to your Pushover account.
 1. [Create a new app](https://pushover.net/apps/build).
-1. Fill in the name, description etc., agree to terms and click Create Application.
+1. Fill in the name, description etc., agree to terms and click Create Application. (You might like to set the app icon to the AuroraWatch UK icon from the assets directory, so that it appears on the Pushover messages.)
 1. Copy the API token into a note-taking app.
 1. Go back to your Pushover [account page](https://pushover.net/).
 1. Copy your user key into a note-taking app. (You could also create a delivery group, add multiple user keys to the group, and copy the group key if you wanted to send alerts to multiple users simultaneously.)
