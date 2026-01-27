@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# run `python -m app.aurorawatchuk_alerts` from the root of the repo.
+# to test run `pytest` from the root of the repo.
+
 import argparse
 import os
 import time
