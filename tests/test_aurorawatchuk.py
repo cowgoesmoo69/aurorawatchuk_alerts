@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture
 def mock_awuk_request(mocker):
-    """Fixture to mock AurorWatchUK API XML responses."""
+    """Fixture to mock AuroraWatchUK API XML responses."""
     def _mock(xml):
         class MockXMLResponse:
             def __init__(self, content):
