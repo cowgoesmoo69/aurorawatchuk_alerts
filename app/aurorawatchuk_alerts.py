@@ -117,7 +117,7 @@ def should_alert(config, state):
         state.update(
             {
                 "last_alert_time": 0,
-                "last_alert_status": 0
+                "last_alert_status": 0,
                 }
             )
         return False
