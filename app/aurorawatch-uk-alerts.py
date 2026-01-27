@@ -18,7 +18,7 @@ CHECK_INTERVAL = 0
 TTL = 0
 PUSHOVER_APP_TOKEN = None
 PUSHOVER_USER_KEY = None
-
+STATUS_TEXT = ["GREEN", "YELLOW", "AMBER", "RED"]
 
 def argparser():
     parser = argparse.ArgumentParser(
@@ -126,7 +126,6 @@ def pre_checks():
 
 
 def main():
-    STATUS_TEXT = ["GREEN", "YELLOW", "AMBER", "RED"]
     last_alert_time = 0
     last_alert_status = 0
     while True:
