@@ -4,7 +4,6 @@ import argparse
 import os
 import random
 import time
-from typing_extensions import runtime
 from aurorawatchuk import get_status
 from datetime import date, datetime, timedelta
 from pushover import send_alert
