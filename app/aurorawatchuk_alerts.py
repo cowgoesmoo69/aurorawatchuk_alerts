@@ -3,8 +3,8 @@
 import argparse
 import os
 import time
-from aurorawatchuk import get_status
-from pushover import send_alert
+from app.aurorawatchuk import get_status
+from app.pushover import send_alert
 
 SCRIPT_VERSION = "aurorawatchuk_alerts 2.0.0"
 
@@ -43,7 +43,7 @@ def argparser():
     return parser.parse_args()
 
 
-def pre_checks():
+def pre_checks(token, user, args):
     """
     Checks environment variables, validates command line arguments.
     Returns dict with config info for use elsewhere.
@@ -52,18 +52,15 @@ def pre_checks():
     
     # Environment variables.
     # App token.
-    token = os.environ.get("PUSHOVER_APP_TOKEN")
     if token is None:
         raise RuntimeError("PUSHOVER_APP_TOKEN environment variable missing.")
     config["token"] = token
     # User key.
-    user = os.environ.get("PUSHOVER_USER_KEY")
     if user is None:
         raise RuntimeError("PUSHOVER_USER_KEY environment variable missing.")
     config["user"] = user
 
-    # Parse command line arguments.
-    args = argparser()
+    
     # Reduced sensitivity option.
     config["reduced_sensitivity"] = args.reduced_sensitivity
     
@@ -121,6 +118,7 @@ def should_alert(config, state):
                 }
             )
         return False
+    # current_status >= threshold.
     now = time.time()
     if state["last_alert_time"] == 0 or (now - state["last_alert_time"] >= config["alert_interval"]) or state["current_status"] > state["last_alert_status"]:
         state.update(
@@ -130,11 +128,19 @@ def should_alert(config, state):
                 }
             )
         return True
+    return False
 
+def load_env():
+    t = os.environ.get("PUSHOVER_APP_TOKEN")
+    u = os.environ.get("PUSHOVER_USER_KEY")
+    return t, u
 
 def main():
     status_text = ["GREEN", "YELLOW", "AMBER", "RED"]
-    config = pre_checks()
+    token, user = load_env()
+    # Parse command line arguments.
+    arguments = argparser()
+    config = pre_checks(token, user, arguments)
     state = {
         "current_status": 0,
         "last_alert_status": 0,
