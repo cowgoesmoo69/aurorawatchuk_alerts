@@ -2,10 +2,8 @@
 
 import argparse
 import os
-import random
 import time
 from aurorawatchuk import get_status
-from datetime import date, datetime, timedelta
 from pushover import send_alert
 
 SCRIPT_VERSION = "aurorawatch-uk-alerts 2.0.0"
