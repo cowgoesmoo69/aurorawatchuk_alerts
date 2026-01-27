@@ -1,5 +1,6 @@
 from app.aurorawatchuk import process_status_ids
 
+# Check green status is returned when it should be.
 def test_process_status_ids_green():
     status_ids = [
         {"status_id": "green"},
@@ -26,6 +27,7 @@ def test_process_status_ids_green():
         ]
     assert process_status_ids(status_ids) == 0
 
+# Check yellow status is returned when it should be.
 def test_process_status_ids_yellow():
     status_ids = [
         {"status_id": "yellow"},
@@ -37,6 +39,7 @@ def test_process_status_ids_yellow():
         ]
     assert process_status_ids(status_ids) == 1
 
+# Check amber status is returned when it should be.
 def test_process_status_ids_amber():
     status_ids = [
         {"status_id": "amber"},
@@ -48,6 +51,7 @@ def test_process_status_ids_amber():
         ]
     assert process_status_ids(status_ids) == 2
 
+# Check red status is returned when it should be.
 def test_process_status_ids_red():
     status_ids = [
         {"status_id": "red"},
