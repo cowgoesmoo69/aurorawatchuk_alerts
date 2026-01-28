@@ -5,6 +5,8 @@
 
 # Python virtual environment
 env/*
+# Environment file for app token and user key
+keys.env
 
 # User-specific files
 *.rsuser
