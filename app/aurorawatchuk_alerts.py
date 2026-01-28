@@ -11,6 +11,7 @@ from app.pushover import send_alert
 
 SCRIPT_VERSION = "aurorawatchuk_alerts 2.0.0"
 
+
 def argparser():
     parser = argparse.ArgumentParser(
         description="Fetch Aurorawatch UK status and send a Pushover alert if status is above threshold. This script requires a Pushover app token and a Pushover user/group key to be available as environment variables PUSHOVER_APP_TOKEN and PUSHOVER_USER_KEY. Consult your operating system's documentation for information on how to set environment variables."
@@ -52,7 +53,7 @@ def pre_checks(token, user, args):
     Returns dict with config info for use elsewhere.
     """
     config = {}
-    
+
     # Environment variables.
     # App token.
     if token is None:
@@ -63,20 +64,19 @@ def pre_checks(token, user, args):
         raise RuntimeError("PUSHOVER_USER_KEY environment variable missing.")
     config["user"] = user
 
-    
     # Reduced sensitivity option.
     config["reduced_sensitivity"] = args.reduced_sensitivity
-    
+
     # Threshold.
     try:
         threshold = int(args.threshold)
     except ValueError:
         raise TypeError("Threshold must be an integer.")
-    if threshold in range(1,(3 + 1),1):
+    if threshold in range(1, (3 + 1), 1):
         config["threshold"] = threshold
     else:
         raise ValueError("Threshold must be between 1 and 3.")
-    
+
     # Alert interval
     try:
         alert_interval = int(args.alert_interval)
@@ -86,7 +86,7 @@ def pre_checks(token, user, args):
         config["alert_interval"] = alert_interval
     else:
         raise ValueError("Alert interval must be > 0.")
-    
+
     # Check interval
     try:
         check_interval = int(args.check_interval)
@@ -96,13 +96,13 @@ def pre_checks(token, user, args):
         config["check_interval"] = check_interval
     else:
         raise ValueError("Check interval must be >= 180.")
-    
+
     # TTL.
     try:
         ttl = int(args.ttl)
     except ValueError:
         raise TypeError("TTL must be an integer.")
-    if ttl in range(1,(31536000 + 1),1):
+    if ttl in range(1, (31536000 + 1), 1):
         config["ttl"] = ttl
     else:
         raise ValueError("TTL must be betwen 1 and 31536000.")
@@ -118,25 +118,28 @@ def should_alert(config, state):
             {
                 "last_alert_time": 0,
                 "last_alert_status": 0,
-                }
-            )
+            }
+        )
         return False
     # current_status >= threshold.
     now = time.time()
-    if state["last_alert_time"] == 0 or (now - state["last_alert_time"] >= config["alert_interval"]) or state["current_status"] > state["last_alert_status"]:
+    if (
+        state["last_alert_time"] == 0
+        or (now - state["last_alert_time"] >= config["alert_interval"])
+        or state["current_status"] > state["last_alert_status"]
+    ):
         state.update(
-            {
-                "last_alert_time": now,
-                "last_alert_status": state["current_status"]
-                }
-            )
+            {"last_alert_time": now, "last_alert_status": state["current_status"]}
+        )
         return True
     return False
+
 
 def load_env():
     t = os.environ.get("PUSHOVER_APP_TOKEN")
     u = os.environ.get("PUSHOVER_USER_KEY")
     return t, u
+
 
 def main():
     status_text = ["GREEN", "YELLOW", "AMBER", "RED"]
@@ -148,8 +151,8 @@ def main():
         "current_status": 0,
         "last_alert_status": 0,
         "last_alert_time": 0,
-        }
-    #print(config)
+    }
+    # print(config)
     while True:
         state["current_status"] = get_status(config["reduced_sensitivity"])
         print(f"Current status: {state['current_status']}")
