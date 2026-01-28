@@ -97,10 +97,6 @@ These instructions are written primarily with Debian in mind, but they will prob
     `pip install -r requirements.txt`,
 
     `deactivate`.
-
-
-
-
 1. Create a new systemd unit file:
 
     `sudo nano /etc/systemd/system/aurorawatchuk_alerts.service`
@@ -121,7 +117,6 @@ These instructions are written primarily with Debian in mind, but they will prob
     KillMode=control-group
     Restart=no
     EnvironmentFile=/home/aurora/opt/aurorawatchuk_alerts/keys.env
-    ### TODO ### need to verify ExecStart line functions correctly ### TODO ###
     ExecStart=cd /home/aurora/opt/aurorawatchuk_alerts && env/bin/python3 -m app.aurorawatchuk_alerts 2
 
     [Install]
