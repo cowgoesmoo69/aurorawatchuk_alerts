@@ -2,7 +2,7 @@
 ## Pre-requisites
 - A system running a Linux distribution that uses systemd, e.g. [Debian](https://www.debian.org/), and sudo access.
 - [git](https://git-scm.com/). Install with `sudo apt install git`.
-- [Python 3](https://www.python.org/). This project is currently developed using [Python 3.14.2](https://www.python.org/downloads/release/python-3142/). It will probably work ok with 3.12+ but has not been exhaustively tested.
+- [Python 3](https://www.python.org/). This project is currently developed using [Python 3.14.2](https://www.python.org/downloads/release/python-3142/). It will probably work ok with 3.11+ but has not been exhaustively tested.
 - Some additional Python libraries. Dependent upon which Linux distribution you're using some/all of these may already be present. Install using pip or your package manager.
   - requests
   - lxml
@@ -87,7 +87,7 @@ These instructions are written primarily with Debian in mind, but they will prob
 
     Ctrl-s to save, Ctrl-x to exit.
 
-    (This example uses the default alert interval, check interval, sensitivity and ttl settings, and an alert threshold of amber. See usage section for details of command line arguments.)
+    (This example uses the default alert interval, check interval, sensitivity and ttl settings, and an alert threshold of amber. See [README.md](README.md) for details of command line arguments.)
 1. Reload systemd unit files:
 
     `sudo systemctl daemon-reload`.
