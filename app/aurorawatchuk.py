@@ -18,7 +18,7 @@ def get_status_ids(reduced_sensitivity):
             AWUK_URL,
             # AWUK request that referer is used to identify clients accessing their API.
             headers={
-                "referer": "https://github.com/cowgoesmoo69/aurorawatch-uk-alerts"
+                "referer": "https://github.com/cowgoesmoo69/aurorawatchuk_alerts"
             },
             timeout=10,
         )
