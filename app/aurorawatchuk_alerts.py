@@ -17,24 +17,24 @@ def argparser():
         description="Fetch Aurorawatch UK status and send a Pushover alert if status is above threshold. This script requires a Pushover app token and a Pushover user/group key to be available as environment variables PUSHOVER_APP_TOKEN and PUSHOVER_USER_KEY. Consult your operating system's documentation for information on how to set environment variables."
     )
     parser.add_argument(
-        "threshold", help="Sets the alert threshold, 1=yellow, 2=amber, 3=red"
+        "threshold", help="Integer, sets the alert threshold: 1 = yellow; 2 = amber; 3 = red"
     )
     parser.add_argument(
         "-a",
         "--alert-interval",
-        help="Sets a custom alert interval in seconds. Default is one hour.",
+        help="Sets a custom alert interval in seconds. Default is one hour",
         default=3600,
     )
     parser.add_argument(
         "-c",
         "--check-interval",
-        help="Sets a custom check interval in seconds. Default is five minutes.",
+        help="Sets a custom check interval in seconds. Default is five minutes",
         default=300,
     )
     parser.add_argument(
         "-r",
         "--reduced-sensitivity",
-        help="Only send alerts when status of all sites is above threshold.",
+        help="Only send alerts when status of all sites is above threshold",
         action="store_true",
     )
     parser.add_argument(
