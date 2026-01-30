@@ -328,9 +328,6 @@ def send_alert(**kwargs):
 
 
 def main():
-    # testing only
-    # image = ("image.jpg", open("valid/path/to/image.jpg", "rb"), "image/jpeg")
-    # send_alert(token="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", user="yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", message="testing", attachment=image)
     print("This script is not intended to be run as-is.")
     print(
         "Put this file in the same directory as your script and import: from pushover import send_alert"
