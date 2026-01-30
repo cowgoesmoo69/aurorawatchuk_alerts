@@ -66,7 +66,7 @@ def pre_checks(token, user, args):
     # User key.
     if user is None:
         raise RuntimeError("PUSHOVER_USER_KEY environment variable missing.")
-    if re.fullmatch(r"[a-z0-9]{30}", token):
+    if re.fullmatch(r"[a-z0-9]{30}", user):
         config["user"] = user
     else:
         raise ValueError("PUSHOVER_USER_KEY format not valid. Only a-z, 0-9, 30 characters.")
