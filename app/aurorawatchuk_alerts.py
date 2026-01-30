@@ -118,7 +118,7 @@ def pre_checks(token, user, args):
 
 
 def should_alert(config, state):
-    if state["current_status"] == None:
+    if state["current_status"] is None:
         return False
     if state["current_status"] < config["threshold"]:
         state.update(
