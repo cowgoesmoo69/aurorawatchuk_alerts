@@ -18,7 +18,8 @@ def argparser():
         description="Fetch Aurorawatch UK status and send a Pushover alert if status is above threshold. This script requires a Pushover app token and a Pushover user/group key to be available as environment variables PUSHOVER_APP_TOKEN and PUSHOVER_USER_KEY. Consult your operating system's documentation for information on how to set environment variables."
     )
     parser.add_argument(
-        "threshold", help="Integer, sets the alert threshold: 1 = yellow; 2 = amber; 3 = red"
+        "threshold",
+        help="Integer, sets the alert threshold: 1 = yellow; 2 = amber; 3 = red",
     )
     parser.add_argument(
         "-a",
@@ -62,14 +63,18 @@ def pre_checks(token, user, args):
     if re.fullmatch(r"[a-z0-9]{30}", token):
         config["token"] = token
     else:
-        raise ValueError("PUSHOVER_APP_TOKEN format not valid. Only a-z, 0-9, 30 characters.")
+        raise ValueError(
+            "PUSHOVER_APP_TOKEN format not valid. Only a-z, 0-9, 30 characters."
+        )
     # User key.
     if user is None:
         raise RuntimeError("PUSHOVER_USER_KEY environment variable missing.")
     if re.fullmatch(r"[a-z0-9]{30}", user):
         config["user"] = user
     else:
-        raise ValueError("PUSHOVER_USER_KEY format not valid. Only a-z, 0-9, 30 characters.")
+        raise ValueError(
+            "PUSHOVER_USER_KEY format not valid. Only a-z, 0-9, 30 characters."
+        )
 
     # Reduced sensitivity option.
     config["reduced_sensitivity"] = args.reduced_sensitivity

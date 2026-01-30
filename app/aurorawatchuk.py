@@ -17,9 +17,7 @@ def get_status_ids(reduced_sensitivity):
         response = requests.get(
             AWUK_URL,
             # AWUK request that referer is used to identify clients accessing their API.
-            headers={
-                "referer": "https://github.com/cowgoesmoo69/aurorawatchuk_alerts"
-            },
+            headers={"referer": "https://github.com/cowgoesmoo69/aurorawatchuk_alerts"},
             timeout=10,
         )
     except Exception as e:

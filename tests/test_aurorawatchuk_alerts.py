@@ -18,13 +18,13 @@ def test_pre_checks_valid_data():
     )
     config = pre_checks(token, user, args)
     assert config == {
-    "token": "abcdefghijklmnopqrstuvwxyz1234",
-    "user": "abcdefghijklmnopqrstuvwxyz1234",
-    "threshold": 1,
-    "alert_interval": 3600,
-    "check_interval": 300,
-    "reduced_sensitivity": False,
-    "ttl": 14400,
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
+        "threshold": 1,
+        "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
 
 
@@ -48,7 +48,8 @@ def test_pre_checks_bad_token():
     # Invalid token.
     token = "moo"
     with pytest.raises(
-        ValueError, match="PUSHOVER_APP_TOKEN format not valid. Only a-z, 0-9, 30 characters."
+        ValueError,
+        match="PUSHOVER_APP_TOKEN format not valid. Only a-z, 0-9, 30 characters.",
     ):
         config = pre_checks(token, user, args)
 
@@ -73,7 +74,8 @@ def test_pre_checks_bad_user():
     # Invalid token.
     user = "moo"
     with pytest.raises(
-        ValueError, match="PUSHOVER_USER_KEY format not valid. Only a-z, 0-9, 30 characters."
+        ValueError,
+        match="PUSHOVER_USER_KEY format not valid. Only a-z, 0-9, 30 characters.",
     ):
         config = pre_checks(token, user, args)
 
@@ -183,13 +185,13 @@ def test_pre_checks_bad_ttl():
 def test_should_alert_invalid_current_status():
     # Valid data.
     config = {
-    "token": "abcdefghijklmnopqrstuvwxyz1234",
-    "user": "abcdefghijklmnopqrstuvwxyz1234",
-    "threshold": 1,
-    "alert_interval": 3600,
-    "check_interval": 300,
-    "reduced_sensitivity": False,
-    "ttl": 14400,
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
+        "threshold": 1,
+        "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
     state = {
         "current_status": 0,
@@ -204,13 +206,13 @@ def test_should_alert_invalid_current_status():
 def test_should_alert_status_green_below_threshold_yellow():
     # Valid data.
     config = {
-    "token": "abcdefghijklmnopqrstuvwxyz1234",
-    "user": "abcdefghijklmnopqrstuvwxyz1234",
-    "threshold": 1,
-    "alert_interval": 3600,
-    "check_interval": 300,
-    "reduced_sensitivity": False,
-    "ttl": 14400,
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
+        "threshold": 1,
+        "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
     state = {
         "current_status": 0,
@@ -223,18 +225,18 @@ def test_should_alert_status_green_below_threshold_yellow():
     assert should_alert(config, state) == False
     # Check returned state is correct.
     assert state["current_status"] == 0
-    
-    
+
+
 def test_should_alert_status_yellow_below_threshold_amber():
     # Valid data.
     config = {
-    "token": "abcdefghijklmnopqrstuvwxyz1234",
-    "user": "abcdefghijklmnopqrstuvwxyz1234",
-    "threshold": 1,
-    "alert_interval": 3600,
-    "check_interval": 300,
-    "reduced_sensitivity": False,
-    "ttl": 14400,
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
+        "threshold": 1,
+        "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
     state = {
         "current_status": 0,
@@ -276,13 +278,13 @@ def test_should_alert_status_amber_below_threshold_red():
 def test_should_alert_alertinterval():
     # Valid data.
     config = {
-    "token": "abcdefghijklmnopqrstuvwxyz1234",
-    "user": "abcdefghijklmnopqrstuvwxyz1234",
-    "threshold": 1,
-    "alert_interval": 3600,
-    "check_interval": 300,
-    "reduced_sensitivity": False,
-    "ttl": 14400,
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
+        "threshold": 1,
+        "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
     state = {
         "current_status": 0,
@@ -304,13 +306,13 @@ def test_should_alert_alertinterval():
 def test_should_alert_escalation():
     # Valid data.
     config = {
-    "token": "abcdefghijklmnopqrstuvwxyz1234",
-    "user": "abcdefghijklmnopqrstuvwxyz1234",
-    "threshold": 1,
-    "alert_interval": 3600,
-    "check_interval": 300,
-    "reduced_sensitivity": False,
-    "ttl": 14400,
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
+        "threshold": 1,
+        "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
     state = {
         "current_status": 0,

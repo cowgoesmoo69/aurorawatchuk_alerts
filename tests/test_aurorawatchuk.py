@@ -136,7 +136,6 @@ def test_process_status_ids_single_amber():
     assert process_status_ids(status_ids) == 2
 
 
-
 def test_process_status_ids_single_red():
     status_ids = [
         {"status_id": "red"},
