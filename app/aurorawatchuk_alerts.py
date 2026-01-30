@@ -58,11 +58,17 @@ def pre_checks(token, user, args):
     # App token.
     if token is None:
         raise RuntimeError("PUSHOVER_APP_TOKEN environment variable missing.")
-    config["token"] = token
+    if re.fullmatch(r"[a-z0-9]{30}", token):
+        config["token"] = token
+    else:
+        raise ValueError("PUSHOVER_APP_TOKEN format not valid. Only a-z, 0-9, 30 characters.")
     # User key.
     if user is None:
         raise RuntimeError("PUSHOVER_USER_KEY environment variable missing.")
-    config["user"] = user
+    if re.fullmatch(r"[a-z0-9]{30}", token):
+        config["user"] = user
+    else:
+        raise ValueError("PUSHOVER_USER_KEY format not valid. Only a-z, 0-9, 30 characters.")
 
     # Reduced sensitivity option.
     config["reduced_sensitivity"] = args.reduced_sensitivity
