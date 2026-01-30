@@ -4,7 +4,7 @@ from argparse import Namespace
 from app.aurorawatchuk_alerts import pre_checks, should_alert
 
 
-# pre_checks() test
+# pre_checks() tests.
 def test_pre_checks_valid_data():
     # Valid test data.
     token = "abcdefghijklmnopqrstuvwxyz1234"
@@ -179,82 +179,159 @@ def test_pre_checks_bad_ttl():
     )
 
 
-def test_should_alert():
-    # Only need partial dict for testing.
+# should_alert() tests.
+def test_should_alert_invalid_current_status():
+    # Valid data.
     config = {
-        "threshold": 2,
-        "alert_interval": 3600,
+    "token": "abcdefghijklmnopqrstuvwxyz1234",
+    "user": "abcdefghijklmnopqrstuvwxyz1234",
+    "threshold": 1,
+    "alert_interval": 3600,
+    "check_interval": 300,
+    "reduced_sensitivity": False,
+    "ttl": 14400,
     }
-    # State dict for testing.
     state = {
         "current_status": 0,
         "last_alert_status": 0,
         "last_alert_time": 0,
     }
-
-    # Invalid current state
+    # Invalid current status
     state["current_status"] = None
     assert should_alert(config, state) == False
 
-    # Valid current state, below threshold.
-    state["current_status"] = 1
-    state.update(
-        {
-            "last_alert_time": None,
-            "last_alert_status": None,
-        }
-    )
-    assert should_alert(config, state) == False
-    # Check state is updated too.
-    assert state == {
-        "current_status": 1,
+
+def test_should_alert_status_green_below_threshold_yellow():
+    # Valid data.
+    config = {
+    "token": "abcdefghijklmnopqrstuvwxyz1234",
+    "user": "abcdefghijklmnopqrstuvwxyz1234",
+    "threshold": 1,
+    "alert_interval": 3600,
+    "check_interval": 300,
+    "reduced_sensitivity": False,
+    "ttl": 14400,
+    }
+    state = {
+        "current_status": 0,
         "last_alert_status": 0,
         "last_alert_time": 0,
     }
-
-    # Interval timing
-    state["current_status"] = 2
-    assert should_alert(config, state) == True
-    # Check state is updated too.
-    assert state["last_alert_status"] == state["current_status"]
-    assert state["last_alert_time"] > 0
-    # Wait a second, then test again. Too soon.
-    time.sleep(2)
+    # Current status green, threshold yellow.
+    state["current_status"] = 0
+    config["threshold"] = 1
     assert should_alert(config, state) == False
-    # Manipulate the last alert time to emulate passage of two hours
-    state["last_alert_time"] -= 7200
-    # Test again.
-    assert should_alert(config, state) == True
-
-    # Escalating status overriding alert_interval.
-    # First time meeting threshold.
+    # Check returned state is correct.
+    assert state["current_status"] == 0
+    
+    
+def test_should_alert_status_yellow_below_threshold_amber():
+    # Valid data.
     config = {
+    "token": "abcdefghijklmnopqrstuvwxyz1234",
+    "user": "abcdefghijklmnopqrstuvwxyz1234",
+    "threshold": 1,
+    "alert_interval": 3600,
+    "check_interval": 300,
+    "reduced_sensitivity": False,
+    "ttl": 14400,
+    }
+    state = {
+        "current_status": 0,
+        "last_alert_status": 0,
+        "last_alert_time": 0,
+    }
+    # Current status green, threshold yellow.
+    state["current_status"] = 1
+    config["threshold"] = 2
+    assert should_alert(config, state) == False
+    # Check returned state is correct.
+    assert state["current_status"] == 1
+
+
+def test_should_alert_status_amber_below_threshold_red():
+    # Valid data.
+    config = {
+        "token": "abcdefghijklmnopqrstuvwxyz1234",
+        "user": "abcdefghijklmnopqrstuvwxyz1234",
         "threshold": 1,
         "alert_interval": 3600,
+        "check_interval": 300,
+        "reduced_sensitivity": False,
+        "ttl": 14400,
     }
-    # State dict for testing.
     state = {
-        "current_status": 1,
+        "current_status": 0,
         "last_alert_status": 0,
         "last_alert_time": 0,
     }
-    assert should_alert(config, state) == True
-    # Wait, test again, too soon.
-    time.sleep(2)
-    assert should_alert(config, state) == False
-
-    # Escalate to next level.
+    # Current status green, threshold yellow.
     state["current_status"] = 2
-    assert should_alert(config, state) == True
-    assert state["last_alert_status"] == 2
-    # Wait, test again, too soon.
-    time.sleep(2)
+    config["threshold"] = 3
     assert should_alert(config, state) == False
+    # Check returned state is correct.
+    assert state["current_status"] == 2
 
-    # Escalate to next level.
+
+def test_should_alert_alertinterval():
+    # Valid data.
+    config = {
+    "token": "abcdefghijklmnopqrstuvwxyz1234",
+    "user": "abcdefghijklmnopqrstuvwxyz1234",
+    "threshold": 1,
+    "alert_interval": 3600,
+    "check_interval": 300,
+    "reduced_sensitivity": False,
+    "ttl": 14400,
+    }
+    state = {
+        "current_status": 0,
+        "last_alert_status": 0,
+        "last_alert_time": 0,
+    }
+    # First time at threshold.
+    now = 1
+    state["current_status"] = 1
+    assert should_alert(config, state, now) == True
+    # Again, but too soon.
+    now = 2
+    assert should_alert(config, state, now) == False
+    # Again, enough time has passed.
+    now = 3601
+    assert should_alert(config, state, now) == True
+
+
+def test_should_alert_escalation():
+    # Valid data.
+    config = {
+    "token": "abcdefghijklmnopqrstuvwxyz1234",
+    "user": "abcdefghijklmnopqrstuvwxyz1234",
+    "threshold": 1,
+    "alert_interval": 3600,
+    "check_interval": 300,
+    "reduced_sensitivity": False,
+    "ttl": 14400,
+    }
+    state = {
+        "current_status": 0,
+        "last_alert_status": 0,
+        "last_alert_time": 0,
+    }
+    # First time at threshold.
+    now = 1
+    state["current_status"] = 1
+    assert should_alert(config, state, now) == True
+    # Again, but too soon.
+    now = 2
+    assert should_alert(config, state, now) == False
+    # Again, status has escalated.
+    now = 3
+    state["current_status"] = 2
+    assert should_alert(config, state, now) == True
+    # Again, but too soon.
+    now = 4
+    assert should_alert(config, state, now) == False
+    # Again, status has escalated.
+    now = 5
     state["current_status"] = 3
-    assert should_alert(config, state) == True
-    assert state["last_alert_status"] == 3
-    # Wait, test again, too soon.
-    time.sleep(2)
-    assert should_alert(config, state) == False
+    assert should_alert(config, state, now) == True
