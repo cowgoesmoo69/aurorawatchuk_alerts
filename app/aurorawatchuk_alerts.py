@@ -11,7 +11,7 @@ import time
 from app.aurorawatchuk import get_status
 from app.pushover import send_alert
 
-SCRIPT_VERSION = "aurorawatchuk_alerts 2.0.0"
+SCRIPT_VERSION = "aurorawatchuk_alerts 2.0.1"
 
 
 def argparser():
