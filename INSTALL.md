@@ -72,6 +72,7 @@ These instructions are written primarily with Debian in mind, but they will prob
     Wants=network-online.target
 
     [Service]
+    WorkingDirectory=/home/aurora/opt/aurorawatchuk_alerts
     User=aurora
     Group=aurora
     Type=exec
@@ -79,7 +80,7 @@ These instructions are written primarily with Debian in mind, but they will prob
     KillMode=control-group
     Restart=no
     EnvironmentFile=/home/aurora/opt/aurorawatchuk_alerts/keys.env
-    ExecStart=cd /home/aurora/opt/aurorawatchuk_alerts && env/bin/python3 -m app.aurorawatchuk_alerts 2
+    ExecStart=/home/aurora/opt/aurorawatchuk_alerts/env/bin/python3 -m app.aurorawatchuk_alerts 2
 
     [Install]
     WantedBy=multi-user.target
